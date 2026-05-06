@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>K-40 Half-Life Decay Visual</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Courier Prime', 'Courier New', monospace;
+    background: #f5f0ea;
+    padding: 12px;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .visual-container {
+    background: #f5f0ea;
+    padding: 12px;
+    max-width: 1100px;
+    width: 100%;
+  }
+
+  .visual-title {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: #2a1f15;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+
+  .circle-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    align-items: start;
+  }
+
+  .circle-item {
+    text-align: center;
+    opacity: 0;
+    transform: scale(0.7);
+    animation: fadeInScale 0.6s ease forwards;
+  }
+
+  .circle-item:nth-child(1) { animation-delay: 0.3s; }
+  .circle-item:nth-child(2) { animation-delay: 1.2s; }
+  .circle-item:nth-child(3) { animation-delay: 2.1s; }
+  .circle-item:nth-child(4) { animation-delay: 3.0s; }
+  .circle-item:nth-child(5) { animation-delay: 3.9s; }
+
+  @keyframes fadeInScale {
+    0% {
+      opacity: 0;
+      transform: scale(0.7);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .circle-svg {
+    width: 100%;
+    max-width: 160px;
+    height: auto;
+    aspect-ratio: 1;
+    margin: 0 auto;
+  }
+
+  .time-label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #2a1f15;
+    margin-top: 10px;
+  }
+
+  .halflife-label {
+    font-size: 13px;
+    color: #5d4a30;
+    margin-top: 3px;
+  }
+
+  .legend {
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    font-size: 16px;
+    color: #2a1f15;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeIn 0.8s ease forwards;
+    animation-delay: 4.6s;
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .legend-dot {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1.5px solid #2a1f15;
+  }
+
+  .legend-dot.parent {
+    background: radial-gradient(circle at 35% 35%, #a37bc8 0%, #6b3fa0 60%, #4d2978 100%);
+  }
+
+  .legend-dot.daughter {
+    background: radial-gradient(circle at 35% 35%, #f5d56a 0%, #d4a017 60%, #a07a0a 100%);
+  }
+
+  .replay-btn {
+    display: block;
+    margin: 16px auto 0;
+    background: white;
+    color: #253D5B;
+    border: 2px solid #253D5B;
+    padding: 7px 16px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    opacity: 0;
+    animation: fadeIn 0.8s ease forwards;
+    animation-delay: 4.8s;
+    transition: all 0.15s ease;
+  }
+
+  .replay-btn:hover {
+    background: #253D5B;
+    color: white;
+  }
+
+  @media (max-width: 600px) {
+    .circle-row {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+    .legend {
+      gap: 16px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="visual-container">
+
+  <div class="visual-title">K-40 Half-Life Decay</div>
+
+  <div class="circle-row" id="circleRow">
+
+    <div class="circle-item">
+      <svg class="circle-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="parentGrad1" cx="35%" cy="35%" r="65%">
+            <stop offset="0%" stop-color="#a37bc8" />
+            <stop offset="60%" stop-color="#6b3fa0" />
+            <stop offset="100%" stop-color="#4d2978" />
+          </radialGradient>
+        </defs>
+        <circle cx="60" cy="60" r="50" fill="url(#parentGrad1)" stroke="#2a1f15" stroke-width="2"/>
+        <text x="60" y="58" font-family="Courier Prime, Courier New, monospace" font-size="16" font-weight="bold" fill="white" text-anchor="middle">100%</text>
+        <text x="60" y="74" font-family="Courier Prime, Courier New, monospace" font-size="11" fill="white" text-anchor="middle">K-40</text>
+      </svg>
+      <div class="time-label">0 Ma</div>
+      <div class="halflife-label">Start</div>
+    </div>
+
+    <div class="circle-item">
+      <svg class="circle-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="parentGrad2" cx="35%" cy="35%" r="65%">
+            <stop offset="0%" stop-color="#a37bc8" />
+            <stop offset="60%" stop-color="#6b3fa0" />
+            <stop offset="100%" stop-color="#4d2978" />
+          </radialGradient>
+          <radialGradient id="daughterGrad2" cx="35%" cy="35%" r="65%">
+            <stop offset="0%" stop-color="#f5d56a" />
+            <stop offset="60%" stop-color="#d4a017" />
+            <stop offset="100%" stop-color="#a07a0a" />
+          </radialGradient>
+        </defs>
+        <path d="M 60 10 A 50 50 0 0 0 60 110 Z" fill="url(#daughterGrad2)" stroke="#2a1f15" stroke-width="2"/>
+        <path d="M 60 10 A 50 50 0 0 1 60 110 Z" fill="url(#parentGrad2)" stroke="#2a1f15" stroke-width="2"/>
+        <text x="60" y="64" font-family="Courier Prime, Courier New, monospace" font-size="13" font-weight="bold" fill="white" text-anchor="middle">50/50</text>
+      </svg>
+      <div class="time-label">1,250 Ma</div>
+      <div class="halflife-label">1 half-life</div>
+    </div>
+
+    <div class="circle-item">
+      <svg class="circle-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="parentGrad3" cx="35%" cy="35%" r="65%">
+            <stop offset="0%" stop-color="#a37bc8" />
+            <stop offset="60%" stop-color="#6b3fa0" />
+            <stop offset="100%" stop-color="#4d2978" />
+          </radialGradient>
+          <radialGradient id="daughterGrad3" cx="35%" cy="35%" r="65%">
+            <stop offset="0%" stop-color="#f5d56a" />
+            <stop offset="60%" stop-color="#d4a017" />
+            <stop offset="100%" stop-color="#a07a0a" />
+          </radialGradient>
+        </defs>
+        <circle cx="60" cy="60" r="50" fill="url(#daughterGrad3)" stroke="#2a1f15" stroke-width="2"/>
+        <path d="M 60 10 A 50 50 0 0 1 110 60 L 60 60 Z" fill="url(#parentGrad3)" stroke="#2a1f15" stroke-width="2"/>
+      </svg>
+      <div class="time-label">2,500 Ma</div>
+      <div class="halflife-label">2 half-lives</div>
+    </div>
+
+    <div class="circle-item">
+      <svg class="circle-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="parentGrad4" cx="35%" cy="35%" r="65%">
+            <stop offset="0%" stop-color="#a37bc8" />
+            <stop offset="60%" stop-color="#6b3fa0" />
+            <stop offset="100%" stop-color="#4d2978" />
+          </radialGradient>
+          <radialGradient id="daughterGrad4" cx="35%" cy="35%" r="65%">
+            <stop offset="0%" stop-color="#f5d56a" />
+            <stop offset="60%" stop-color="#d4a017" />
+            <stop offset="100%" stop-color="#a07a0a" />
+          </radialGradient>
+        </defs>
+        <circle cx="60" cy="60" r="50" fill="url(#daughterGrad4)" stroke="#2a1f15" stroke-width="2"/>
+        <path d="M 60 10 A 50 50 0 0 1 95.36 24.64 L 60 60 Z" fill="url(#parentGrad4)" stroke="#2a1f15" stroke-width="2"/>
+      </svg>
+      <div class="time-label">3,750 Ma</div>
+      <div class="halflife-label">3 half-lives</div>
+    </div>
+
+    <div class="circle-item">
+      <svg class="circle-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="parentGrad5" cx="35%" cy="35%" r="65%">
+            <stop offset="0%" stop-color="#a37bc8" />
+            <stop offset="60%" stop-color="#6b3fa0" />
+            <stop offset="100%" stop-color="#4d2978" />
+          </radialGradient>
+          <radialGradient id="daughterGrad5" cx="35%" cy="35%" r="65%">
+            <stop offset="0%" stop-color="#f5d56a" />
+            <stop offset="60%" stop-color="#d4a017" />
+            <stop offset="100%" stop-color="#a07a0a" />
+          </radialGradient>
+        </defs>
+        <circle cx="60" cy="60" r="50" fill="url(#daughterGrad5)" stroke="#2a1f15" stroke-width="2"/>
+        <path d="M 60 10 A 50 50 0 0 1 79.13 13.81 L 60 60 Z" fill="url(#parentGrad5)" stroke="#2a1f15" stroke-width="2"/>
+      </svg>
+      <div class="time-label">5,000 Ma</div>
+      <div class="halflife-label">4 half-lives</div>
+    </div>
+
+  </div>
+
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-dot parent"></div>
+      <span><strong>K-40</strong> (parent)</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot daughter"></div>
+      <span><strong>Ar-40</strong> (daughter)</span>
+    </div>
+  </div>
+
+  <button class="replay-btn" id="replayBtn">↺ Replay</button>
+
+</div>
+
+<script>
+  const replayBtn = document.getElementById('replayBtn');
+  const circleRow = document.getElementById('circleRow');
+  const items = circleRow.querySelectorAll('.circle-item');
+  const legend = document.querySelector('.legend');
+
+  replayBtn.addEventListener('click', () => {
+    items.forEach(item => {
+      item.style.animation = 'none';
+      item.offsetHeight;
+      item.style.animation = '';
+    });
+    legend.style.animation = 'none';
+    legend.offsetHeight;
+    legend.style.animation = '';
+  });
+</script>
+
+</body>
+</html>
